@@ -1594,6 +1594,14 @@ has_prefix (const char *str, const char *prefix)
   return strlen (str) >= prefix_len && memcmp (str, prefix, prefix_len) == 0;
 }
 
+int
+has_postfix (const char *str, const char *postfix)
+{
+  size_t postfix_len = strlen (postfix);
+  size_t str_len = strlen (str);
+  return str_len >= postfix_len && memcmp (str + (str_len - postfix_len), postfix, postfix_len) == 0;
+}
+
 static int
 check_access (const char *path)
 {
