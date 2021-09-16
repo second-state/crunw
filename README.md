@@ -22,15 +22,23 @@ Our pre-built binary is based on `ubuntu 20.04` with the following dependencies:
 You need to install the dependencies with:
 
 ```bash
-sudo apt install -y \
+$ sudo apt install -y \
         llvm-10-dev \
         liblld-10-dev
 ```
 
-### Get pre-built runw from the release page
+### Get pre-built crunw from the release page
 
 ```bash
-wget https://github.com/second-state/runw/releases/download/0.1.0/crunw
+$ wget https://github.com/second-state/crunw/releases/download/1.0-wasmedge/crunw_1.0-wasmedge+dfsg-1_amd64.tar.xz
+$ tar -xf crunw_1.0-wasmedge+dfsg-1_amd64.tar.xz
+```
+
+The `tar` command extracts the `crunw` package into a local `usr` directory. Copy the `usr/bin/crun` program into a system-wide directory.
+
+```
+$ sudo mkdir -p /usr/local/crunw/bin
+$ sudo cp usr/bin/crun /usr/local/crunw/bin/
 ```
 
 > If you are not on Ubuntu 20.04, you will need to build your own CRUNW binary. Follow instructions in the appendix.
@@ -39,18 +47,9 @@ wget https://github.com/second-state/runw/releases/download/0.1.0/crunw
 ## Install crunw into cri-o
 
 ```bash
-# Get the wasm-pause utility
-sudo crictl pull docker.io/beststeve/wasm-pause
-
-# Install crunw into cri-o
-sudo cp -v crunw /usr/lib/cri-o-runc/sbin/crunw
-sudo chmod +x /usr/lib/cri-o-runc/sbin/crunw
-sudo sed -i -e 's@default_runtime = "runc"@default_runtime = "crunw"@' /etc/crio/crio.conf
-sudo sed -i -e 's@pause_image = "k8s.gcr.io/pause:3.2"@pause_image = "docker.io/beststeve/wasm-pause"@' /etc/crio/crio.conf
-sudo sed -i -e 's@pause_command = "/pause"@pause_command = "pause.wasm"@' /etc/crio/crio.conf
-sudo tee -a /etc/crio/crio.conf.d/01-crio-runc.conf <<EOF
+$ sudo tee -a /etc/crio/crio.conf.d/01-crio-runc.conf <<EOF
 [crio.runtime.runtimes.crunw]
-runtime_path = "/usr/lib/cri-o-runc/sbin/crunw"
+runtime_path = "/usr/local/crunw/bin/crun"
 runtime_type = "oci"
 runtime_root = "/run/crunw"
 EOF
@@ -59,7 +58,7 @@ EOF
 ## Restart cri-o
 
 ```bash
-sudo systemctl restart crio
+$ sudo systemctl restart crio
 ```
 
 ## Simple Wasi Application
