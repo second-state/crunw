@@ -1,6 +1,9 @@
 **CRUNW** is a OCI compatible runtime for running WASI enabled WebAssembly files inside a container envrionment. It is based on the [crun](https://github.com/containers/crun) runtime, and is extended to support the [WasmEdge](https://github.com/WasmEdge/WasmEdge) WebAssembly runtime.
 
-# CRUNW: Manage WebAssembly programs as container images
+* [Manage WebAssembly programs as container images](#manage-webAssembly-programs-as-container-images) | [Video demo](https://youtu.be/lr4LsOnqaLY)
+* [Manage WebAssembly programs and Docker containers side by side in Kubernetes](#manage-webAssembly-programs-and-docker-containers-side-by-side-in-kubernetes)
+
+# Manage WebAssembly programs as container images
 
 ## Prerequisite
 
@@ -311,7 +314,7 @@ File content is This is in a file
 Test 7: Delete the previous file
 ```
 
-# Kubernetes: Manage WebAssembly programs and Docker containers side by side
+# Manage WebAssembly programs and Docker containers side by side in Kubernetes
 
 ## Requirements
 
