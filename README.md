@@ -313,7 +313,119 @@ Test 7: Delete the previous file
 
 # Kubernetes: Manage WebAssembly programs and Docker containers side by side
 
-TBD
+## Requirements
+
+1. Install CRI-O and setup with crunw
+2. Install go >= 1.17
+3. Install etcd
+
+## Environment
+
+### Setup k8s for local environment
+
+```bash
+# Install go
+wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
+
+# Clone k8s
+git clone https://github.com/kubernetes/kubernetes.git
+git checkout v1.22.2
+
+# Install etcd with hack script in k8s
+sudo CGROUP_DRIVER=systemd CONTAINER_RUNTIME=remote CONTAINER_RUNTIME_ENDPOINT='unix:///var/run/crio/crio.sock' ./hack/install-etcd.sh
+sudo cp third_party/etcd/etcd* /usr/local/bin/
+# After run the above command, you can find the following files: /usr/local/bin/etcd  /usr/local/bin/etcdctl  /usr/local/bin/etcdutl
+
+# Build and run k8s with CRI-O
+sudo CGROUP_DRIVER=systemd CONTAINER_RUNTIME=remote CONTAINER_RUNTIME_ENDPOINT='unix:///var/run/crio/crio.sock' ./hack/local-up-cluster.sh
+# Expected output
+kubelet ( 29926 ) is running.
+wait kubelet ready
+No resources found
+No resources found
+No resources found
+127.0.0.1   NotReady   <none>   1s    v1.22.2
+2021/10/20 12:27:08 [INFO] generate received request
+2021/10/20 12:27:08 [INFO] received CSR
+2021/10/20 12:27:08 [INFO] generating key: rsa-2048
+2021/10/20 12:27:08 [INFO] encoded CSR
+2021/10/20 12:27:08 [INFO] signed certificate with serial number 567797943134773150527871001345021853200115760092
+Create default storage class for
+storageclass.storage.k8s.io/standard created
+Local Kubernetes cluster is running. Press Ctrl-C to shut it down.
+
+Logs:
+  /tmp/kube-apiserver.log
+  /tmp/kube-controller-manager.log
+
+  /tmp/kube-proxy.log
+  /tmp/kube-scheduler.log
+  /tmp/kubelet.log
+
+To start using your cluster, you can open up another terminal/tab and run:
+
+  export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+  cluster/kubectl.sh
+
+Alternatively, you can write to the default kubeconfig:
+
+  export KUBERNETES_PROVIDER=local
+
+  cluster/kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
+  cluster/kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
+  cluster/kubectl.sh config set-context local --cluster=local --user=myself
+  cluster/kubectl.sh config use-context local
+  cluster/kubectl.sh
+```
+
+### Check the pods in another terminal
+
+```bash
+sudo crictl pods
+# Expected output
+POD ID              CREATED             STATE               NAME                       NAMESPACE           ATTEMPT             RUNTIME
+3ee37ea90c85d       7 seconds ago       Ready               coredns-755cd654d4-qnvsp   kube-system         0                   (default)
+```
+
+### Check cluster info in another terminal
+
+```bash
+export KUBERNETES_PROVIDER=local
+
+sudo cluster/kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
+sudo cluster/kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
+sudo cluster/kubectl.sh config set-context local --cluster=local --user=myself
+sudo cluster/kubectl.sh config use-context local
+sudo cluster/kubectl.sh cluster-info
+
+# Expected output
+Cluster "local" set.
+User "myself" set.
+Context "local" created.
+Switched to context "local".
+Kubernetes control plane is running at https://localhost:6443
+CoreDNS is running at https://localhost:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+
+### Run wasm program from k8s
+
+```bash
+sudo cluster/kubectl.sh run -it --rm --restart=Never wasi-demo --image=hydai/wasm-wasi-example:latest /wasi_example_main.wasm 50000000
+Random number: 401583443
+Random bytes: [192, 226, 162, 92, 129, 17, 186, 164, 239, 84, 98, 255, 209, 79, 51, 227, 103, 83, 253, 31, 78, 239, 33, 218, 68, 208, 91, 56, 37, 200, 32, 12, 106, 101, 241, 78, 161, 16, 240, 158, 42, 24, 29, 121, 78, 19, 157, 185, 32, 162, 95, 214, 175, 46, 170, 100, 212, 33, 27, 190, 139, 121, 121, 222, 230, 125, 251, 21, 210, 246, 215, 127, 176, 224, 38, 184, 201, 74, 76, 133, 233, 129, 48, 239, 106, 164, 190, 29, 118, 71, 79, 203, 92, 71, 68, 96, 33, 240, 228, 62, 45, 196, 149, 21, 23, 143, 169, 163, 136, 206, 214, 244, 26, 194, 25, 101, 8, 236, 247, 5, 164, 117, 40, 220, 52, 217, 92, 179]
+Printed from wasi: This is from a main function
+This is from a main function
+The env vars are as follows.
+The args are as follows.
+/wasi_example_main.wasm
+50000000
+File content is This is in a file
+pod "wasi-demo-2" deleted
+```
 
 # Appendix: Build from source
 
