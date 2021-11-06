@@ -7,6 +7,21 @@
 
 ## Prerequisite
 
+---
+
+**Before you proceed**: Please note that you can fast-track the installation and get right up to the [**Simple Wasi Application**](https://github.com/second-state/crunw#simple-wasi-application) **section** if you use the following [crunw_install.sh](https://github.com/second-state/crunw/blob/main/crunw_install.sh) script. The installation script can be used like this ...
+
+```bash
+cd ~
+git clone https://github.com/second-state/crunw.git
+cd ~/crunw
+sudo chmod a+x crunw_install.sh
+./crunw_install.sh
+```
+Otherwise, please continue on with the following manual steps.
+
+---
+
 Please install the following tools for container management.
 
 * [cri-o](https://cri-o.io/)
