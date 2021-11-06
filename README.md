@@ -139,6 +139,20 @@ systemctl restart crio
 
 ## Simple Wasi Application
 
+---
+
+**Before you proceed**: Please note the following demo (including downloading the docker image, creating the pod, running and checking the logs) is all automated using a script called [simple_wasi_application.sh](https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh). You can use it like this.
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh
+sudo chmod a+x simple_wasi_application.sh
+./simple_wasi_application.sh
+```
+
+Otherwise, please continue with the following manual steps.
+
+---
+
 In this example, we would like to demostrate how to create a simple rust application to get program arguments, retrieve environment variables, generate random number, print string to stdout, and create a file.
 
 For creating the container image and application details, please refer to [Simple Wasi Application](docs/examples/simple_wasi_app.md).
