@@ -149,6 +149,8 @@ sudo chmod a+x simple_wasi_application.sh
 ./simple_wasi_application.sh
 ```
 
+The above script will get you to the [manage-webassembly-programs-and-docker-containers-side-by-side-in-kubernetes](https://github.com/second-state/crunw/blob/main/README.md#manage-webassembly-programs-and-docker-containers-side-by-side-in-kubernetes) section.
+
 Otherwise, please continue with the following manual steps.
 
 ---
