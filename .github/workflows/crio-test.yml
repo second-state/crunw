@@ -1,4 +1,4 @@
-name: build
+name: CRI-O test
 
 on:
   workflow_dispatch:
