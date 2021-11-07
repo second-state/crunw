@@ -1,34 +1,29 @@
 **CRUNW** is a OCI compatible runtime for running WASI enabled WebAssembly files inside a container envrionment. It is based on the [crun](https://github.com/containers/crun) runtime, and is extended to support the [WasmEdge](https://github.com/WasmEdge/WasmEdge) WebAssembly runtime.
 
-* [Manage WebAssembly programs as container images](#manage-webAssembly-programs-as-container-images) | [Video demo](https://youtu.be/lr4LsOnqaLY)
+[**Watch a video demo**](https://youtu.be/1gZoQwx8G2c)
+
+* [Manage WebAssembly programs as container images](#manage-webAssembly-programs-as-container-images)
 * [Manage WebAssembly programs and Docker containers side by side in Kubernetes](#manage-webAssembly-programs-and-docker-containers-side-by-side-in-kubernetes)
 
 # Manage WebAssembly programs as container images
 
-## Prerequisite
+## Quick start
 
----
-
-**Before you proceed**: Please note that you can fast-track the installation and get right up to the [**Simple Wasi Application**](https://github.com/second-state/crunw#simple-wasi-application) **section** if you use the following [crunw_install.sh](https://github.com/second-state/crunw/blob/main/crunw_install.sh) script. The installation script can be used like this ...
-
-
-Fetch the script, then make it executable.
+You can use the [crunw_install.sh](https://github.com/second-state/crunw/blob/main/crunw_install.sh) script to install CRI-O and crunw on Ubuntu 20.04.
 
 ```bash
 wget https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh
 sudo chmod a+x crunw_install.sh
-```
-
-Then run it.
-
-```bash
 ./crunw_install.sh
 ```
-Otherwise, please continue on with the following manual steps.
 
----
+Once you are done, you can jump ahead and [try the sample WebAssembly application](https://github.com/second-state/crunw#simple-wasi-application).
 
-Please install the following tools for container management.
+If you prefer to install and configure CRI-O and crunw manually, here are the steps.
+
+## Install CRI-O and WasmEdge
+
+We will install the following tools for container management.
 
 * [cri-o](https://cri-o.io/)
 * [crictl](https://github.com/kubernetes-sigs/cri-tools)
@@ -64,8 +59,7 @@ wget -q https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install
 bash install.sh --path="/usr/local"
 ```
 
-
-## Use pre-built crunw
+## Install pre-built crunw
 
 ### Get pre-built crunw from the release page
 
@@ -139,9 +133,13 @@ systemctl restart crio
 
 ## Simple Wasi Application
 
----
+In this example, we would like to demostrate how to create a simple rust application to get program arguments, retrieve environment variables, generate random number, print string to stdout, and create a file.
 
-**Before you proceed**: Please note the following demo (including downloading the docker image, creating the pod, running and checking the logs) is all automated using a script called [simple_wasi_application.sh](https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh). You can use it like this.
+For creating the container image and application details, please refer to [Simple Wasi Application](docs/examples/simple_wasi_app.md).
+
+### Quick start in CRI-O
+
+To build the WebAssembly application and run it as a container image in CRI-O, you just need to execute the [simple_wasi_application.sh](https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh) script.
 
 ```bash
 wget https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh
@@ -149,17 +147,7 @@ sudo chmod a+x simple_wasi_application.sh
 ./simple_wasi_application.sh
 ```
 
-The above script will get you to the [manage-webassembly-programs-and-docker-containers-side-by-side-in-kubernetes](https://github.com/second-state/crunw/blob/main/README.md#manage-webassembly-programs-and-docker-containers-side-by-side-in-kubernetes) section.
-
-Otherwise, please continue with the following manual steps.
-
----
-
-In this example, we would like to demostrate how to create a simple rust application to get program arguments, retrieve environment variables, generate random number, print string to stdout, and create a file.
-
-For creating the container image and application details, please refer to [Simple Wasi Application](docs/examples/simple_wasi_app.md).
-
-[Demo video on YouTube](https://youtu.be/lr4LsOnqaLY)
+If you prefer to go through the example mannually, here are the step by step instructions.
 
 ### Download wasi-main docker image
 
@@ -353,33 +341,29 @@ Test 7: Delete the previous file
 
 # Manage WebAssembly programs and Docker containers side by side in Kubernetes
 
+## Quick start
 
----
-
-**Before you proceed**: Please note the following demo is automated using a script called [running_wasm_in_kubernetes.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh). You can use it like this.
+The [running_wasm_in_kubernetes.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh) installs and starts the Kubernetes cluster.
 
 ```bash
 wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh
 sudo chmod a+x running_wasm_in_kubernetes.sh
 ./running_wasm_in_kubernetes.sh
 ```
+
 Once this runs, please **DO NOT** close the terminal. You will need to open a new terminal to perform the rest of this demonstration.
 
-This above script will get you to the [start-using-the-cluster](https://github.com/second-state/crunw/blob/main/README.md#start-using-the-cluster) section. You can go ahead and open a new terminal and then continue from there.
+This above script will get you to the [start using the cluster](https://github.com/second-state/crunw/blob/main/README.md#start-using-the-cluster) section. You can go ahead and open a new terminal and then continue from there.
 
-Otherwise, please continue with the following manual steps.
+If you prefer to set it up manually, please continue with the following manual steps.
 
----
-
-## Requirements
+## Prerequisites
 
 1. Install CRI-O and setup with crunw
 2. Install go >= 1.17
 3. Install etcd
 
-## Environment
-
-### Setup k8s for local environment
+## Setup k8s for local environment
 
 ```bash
 # Install go
@@ -436,13 +420,17 @@ Alternatively, you can write to the default kubeconfig:
   cluster/kubectl.sh config set-context local --cluster=local --user=myself
   cluster/kubectl.sh config use-context local
   cluster/kubectl.sh
-
 ```
-### Start using the cluster
 
----
+Do NOT close your terminal window. Kubernetes is running!
 
-**Before you proceed**: Please note the following demo is automated using a script called [running_wasm_in_kubernetes_2.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh). You can use it like this.
+## Start using the cluster
+
+To start using your cluster, you can open up another terminal/tab.
+
+### Quick start
+
+The [running_wasm_in_kubernetes_2.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh) script interacts with Kubernetes to load and runs the [Simple Wasi Application](docs/examples/simple_wasi_app.md).
 
 ```bash
 wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh
@@ -450,15 +438,9 @@ sudo chmod a+x running_wasm_in_kubernetes_2.sh
 ./running_wasm_in_kubernetes_2.sh
 ```
 
-This above script is the last step in this demo (will get you to the very end of this demonstration).
+If you prefer to do this manually, please continue performing he final part of this demonstration using the following manual steps.
 
-Otherwise, please continue performing he final part of this demonstration using the following manual steps.
-
----
-
-
-
-To start using your cluster, you can open up another terminal/tab and run:
+### Manual start
 
 ```bash
 export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
