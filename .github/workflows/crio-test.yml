@@ -27,10 +27,10 @@ jobs:
         
     - name: Install CRI-O and crunw
       run: |
-        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh | sh
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh | bash
         
     - name: Run demo in CRI-O
       run: |
-        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh | sh
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh | bash
         
  
