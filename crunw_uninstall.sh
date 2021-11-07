@@ -1,5 +1,4 @@
 #!/bin/bash
-#WARNING: THIS FILE WILL AUTOMATICALLY REMOVE A LOT OF PACKAGES. PLEASE UNDERSTAND WHAT IS RUNNING BELOW AND DO NOT USE THIS AUTOMATED REMOVAL TOOL IF YOU ARE NOT SURE
 echo -e "Removing packages, please wait ..."
 export OS="xUbuntu_20.04"
 export VERSION="1.21"
@@ -21,5 +20,6 @@ sudo apt purge -y cri-tools
 sudo apt autoremove -y
 sudo apt purge -y containernetworking-plugins
 sudo apt autoremove -y
+bash <(wget -qO- https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/uninstall.sh) -p /usr/local
 sudo rm -rf ~/.wasmedge
 echo -e "Finished"
