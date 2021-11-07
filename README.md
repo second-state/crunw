@@ -11,11 +11,11 @@
 
 **Before you proceed**: Please note that you can fast-track the installation and get right up to the [**Simple Wasi Application**](https://github.com/second-state/crunw#simple-wasi-application) **section** if you use the following [crunw_install.sh](https://github.com/second-state/crunw/blob/main/crunw_install.sh) script. The installation script can be used like this ...
 
-First fetch the script from [here](https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh) and save it on your system as `crunw_install.sh`.
 
-Then make the script executable.
+Fetch the script, then make it executable.
 
 ```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh
 sudo chmod a+x crunw_install.sh
 ```
 
