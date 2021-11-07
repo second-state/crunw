@@ -18,3 +18,10 @@ sudo cp -rp ./kubernetes/third_party/etcd/etcd* /usr/local/bin/
 echo -e "Building and running k8s with CRI-O"
 sudo apt-get install -y make
 sudo CGROUP_DRIVER=systemd CONTAINER_RUNTIME=remote CONTAINER_RUNTIME_ENDPOINT='unix:///var/run/crio/crio.sock' ./kubernetes/hack/local-up-cluster.sh
+# Start
+export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+./kubernetes/cluster/kubectl.sh &
+# Check 
+sudo crictl pods
+export KUBERNETES_PROVIDER=local
+sudo ./kubernetes/cluster/kubectl.sh run -it --rm --restart=Never wasi-demo --image=hydai/wasm-wasi-example:latest /wasi_example_main.wasm 50000000
