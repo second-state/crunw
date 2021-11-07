@@ -364,6 +364,8 @@ sudo chmod a+x running_wasm_in_kubernetes.sh
 ./running_wasm_in_kubernetes.sh
 ```
 
+This above script will get you to the [start-using-the-cluster](https://github.com/second-state/crunw/blob/main/README.md#start-using-the-cluster) section.
+
 Otherwise, please continue with the following manual steps.
 
 ---
