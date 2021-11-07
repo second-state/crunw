@@ -77,5 +77,4 @@ rm -rf crunw_1.0-wasmedge+dfsg-1_amd64.deb
 echo -e "[crio.runtime]\ndefault_runtime = \"crunw\"\n" | sudo tee -i /etc/crio/crio.conf
 echo -e "\n# Add our crunw runtime here\n[crio.runtime.runtimes.crunw]\nruntime_path = \"/usr/bin/crun\"\nruntime_type = \"oci\"\nruntime_root = \"/run/crunw\"\n" | sudo tee -i -a /etc/crio/crio.conf.d/01-crio-runc.conf
 sudo systemctl restart crio
-echo -e "\n\nImportant\n Please run the following command to complete the installation\n\n"
-echo -e "source ~/.wasmedge/env"
+echo -e "Finished"
