@@ -423,6 +423,24 @@ Logs:
 ```
 ### Start using the cluster
 
+---
+
+**Before you proceed**: Please note the following demo is automated using a script called [running_wasm_in_kubernetes_2.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh). You can use it like this.
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh
+sudo chmod a+x running_wasm_in_kubernetes_2.sh
+./running_wasm_in_kubernetes_2.sh
+```
+
+This above script is the last step in this demo (will get you to the very end of this demonstration).
+
+Otherwise, please continue performing he final part of this demonstration using the following manual steps.
+
+---
+
+
+
 To start using your cluster, you can open up another terminal/tab and run:
 
 ```bash
