@@ -67,7 +67,7 @@ then
 fi
 wget -q https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh
 sudo chmod a+x install.sh
-./install.sh
+sudo ./install.sh --path="/usr/local"
 rm -rf install.sh
 echo -e "Installing crunw as debian package"
 wget https://github.com/second-state/crunw/releases/download/1.0-wasmedge/crunw_1.0-wasmedge+dfsg-1_amd64.deb
