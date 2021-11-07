@@ -363,8 +363,9 @@ wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_k
 sudo chmod a+x running_wasm_in_kubernetes.sh
 ./running_wasm_in_kubernetes.sh
 ```
+Once this runs, please **DO NOT** close the terminal. You will need to open a new terminal to perform the rest of this demonstration.
 
-This above script will get you to the [start-using-the-cluster](https://github.com/second-state/crunw/blob/main/README.md#start-using-the-cluster) section.
+This above script will get you to the [start-using-the-cluster](https://github.com/second-state/crunw/blob/main/README.md#start-using-the-cluster) section. You can go ahead and open a new terminal and then continue from there.
 
 Otherwise, please continue with the following manual steps.
 
@@ -420,6 +421,22 @@ Logs:
   /tmp/kube-proxy.log
   /tmp/kube-scheduler.log
   /tmp/kubelet.log
+  
+To start using your cluster, you can open up another terminal/tab and run:
+
+  export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+  cluster/kubectl.sh
+
+Alternatively, you can write to the default kubeconfig:
+
+  export KUBERNETES_PROVIDER=local
+
+  cluster/kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
+  cluster/kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
+  cluster/kubectl.sh config set-context local --cluster=local --user=myself
+  cluster/kubectl.sh config use-context local
+  cluster/kubectl.sh
+
 ```
 ### Start using the cluster
 
