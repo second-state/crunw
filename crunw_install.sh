@@ -71,7 +71,7 @@ sudo ./install.sh --path="/usr/local"
 rm -rf install.sh
 echo -e "Installing crunw as debian package"
 wget https://github.com/second-state/crunw/releases/download/1.0-wasmedge/crunw_1.0-wasmedge+dfsg-1_amd64.deb
-sudo dpkg -i crunw_1.0-wasmedge+dfsg-1_amd64.deb
+sudo dpkg -i --force-overwrite crunw_1.0-wasmedge+dfsg-1_amd64.deb
 rm -rf crunw_1.0-wasmedge+dfsg-1_amd64.deb
 # Write config
 echo -e "[crio.runtime]\ndefault_runtime = \"crunw\"\n" | sudo tee -i /etc/crio/crio.conf
