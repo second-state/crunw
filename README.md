@@ -353,6 +353,21 @@ Test 7: Delete the previous file
 
 # Manage WebAssembly programs and Docker containers side by side in Kubernetes
 
+
+---
+
+**Before you proceed**: Please note the following demo is automated using a script called [running_wasm_in_kubernetes.sh](https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh). You can use it like this.
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh
+sudo chmod a+x running_wasm_in_kubernetes.sh
+./running_wasm_in_kubernetes.sh
+```
+
+Otherwise, please continue with the following manual steps.
+
+---
+
 ## Requirements
 
 1. Install CRI-O and setup with crunw
