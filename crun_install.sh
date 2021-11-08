@@ -76,7 +76,7 @@ cd crun
 ./autogen.sh
 ./configure --with-wasmedge
 make
-sudo cp crun /usr/lib/cri-o-runc/sbin/runc
+sudo cp -f crun /usr/lib/cri-o-runc/sbin/runc
 
 # wget https://github.com/second-state/crunw/releases/download/1.0-wasmedge/crunw_1.0-wasmedge+dfsg-1_amd64.deb
 # sudo dpkg -i --force-overwrite crunw_1.0-wasmedge+dfsg-1_amd64.deb
