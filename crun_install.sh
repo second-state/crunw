@@ -76,14 +76,15 @@ cd crun
 ./autogen.sh
 ./configure --with-wasmedge
 make
-sudo cp -f crun /usr/lib/cri-o-runc/sbin/runc
+sudo make install
+# sudo cp -f crun /usr/lib/cri-o-runc/sbin/runc
 
 # wget https://github.com/second-state/crunw/releases/download/1.0-wasmedge/crunw_1.0-wasmedge+dfsg-1_amd64.deb
 # sudo dpkg -i --force-overwrite crunw_1.0-wasmedge+dfsg-1_amd64.deb
 # rm -rf crunw_1.0-wasmedge+dfsg-1_amd64.deb
 # Write config
-# echo -e "[crio.runtime]\ndefault_runtime = \"crunw\"\n" | sudo tee -i /etc/crio/crio.conf
-# echo -e "\n# Add our crunw runtime here\n[crio.runtime.runtimes.crunw]\nruntime_path = \"/usr/bin/crun\"\nruntime_type = \"oci\"\nruntime_root = \"/run/crunw\"\n" | sudo tee -i -a /etc/crio/crio.conf.d/01-crio-runc.conf
+echo -e "[crio.runtime]\ndefault_runtime = \"crun\"\n" | sudo tee -i /etc/crio/crio.conf
+echo -e "\n# Add crun runtime here\n[crio.runtime.runtimes.crun]\nruntime_path = \"/usr/bin/crun\"\nruntime_type = \"oci\"\nruntime_root = \"/run/crun\"\n" | sudo tee -i -a /etc/crio/crio.conf.d/01-crio-runc.conf
 
 sudo systemctl restart crio
 echo -e "Finished"
