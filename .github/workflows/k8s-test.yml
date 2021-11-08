@@ -31,12 +31,13 @@ jobs:
         
     - name: Start k8s
       run: |
-        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh | bash &
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh | bash
   
-    - name: Sleep for 1800s
-      run: sleep 1800s
+    - name: Sleep for 60s
+      run: sleep 60s
       shell: bash
  
     - name: Run WasmEdge in k8s
       run: |
+        cat nohup.out
         wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh | bash
