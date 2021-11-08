@@ -39,7 +39,5 @@ jobs:
  
     - name: Run WasmEdge in k8s
       run: |
-        pwd
-        ls -al
-        ls -al *
+        cat k8s.log
         wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh | bash
