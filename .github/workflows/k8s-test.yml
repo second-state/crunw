@@ -39,5 +39,4 @@ jobs:
  
     - name: Run WasmEdge in k8s
       run: |
-        cat nohup.out
         wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes_2.sh | bash
