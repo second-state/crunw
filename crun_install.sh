@@ -70,7 +70,7 @@ sudo chmod a+x install.sh
 sudo ./install.sh --path="/usr/local"
 rm -rf install.sh
 echo -e "Building and installing crun"
-apt-get install -y make git gcc build-essential pkgconf libtool libsystemd-dev libprotobuf-c-dev libcap-dev libseccomp-dev libyajl-dev go-md2man libtool autoconf python3 automake
+sudo apt install -y make git gcc build-essential pkgconf libtool libsystemd-dev libprotobuf-c-dev libcap-dev libseccomp-dev libyajl-dev go-md2man libtool autoconf python3 automake
 git clone https://github.com/containers/crun
 cd crun
 ./autogen.sh
