@@ -36,16 +36,38 @@ cargo build --target wasm32-wasi --release
 
 ```
 
-## Build and publish a Docker Hub image for the two wasm examples (optional)
+## (OPTIONAL) Build and publish a Docker Hub image for the two wasm examples
 
-Please note, you can just skip this section and use our Docker images that we created for this example
+Please note, you can just skip this section and use our Docker images that we created for this example (no need to build and hold your own docker hub images, unless you want to). For example, perhaps you have custom rust/wasm code that you want to run.
 
-## Log into Docker
+### Log into Docker
 
 You may need to set up a Docker account i.e. visit [hub.docker.com](https://hub.docker.com/).
 
 ```bash
 docker login -u 
+```
+
+### Client
+
+```bash
+cd ~/wasmedge_wasi_socket/examples/http_client/target/wasm32-wasi/release
+```
+
+Create a new file called `Dockerfile` and paste the following code snipped into it
+
+```bash
+# syntax=docker/dockerfile:1
+FROM scratch
+ADD http_client.wasm .
+CMD ["http_client.wasm"]
+```
+
+Once the `Dockerfile` is saved and closed, then run the following commands
+
+```bash
+docker build -f Dockerfile -t tpmccallum/http_client:latest .
+docker push tpmccallum/http_client:latest
 ```
 
 ### Server
@@ -70,27 +92,13 @@ docker build -f Dockerfile -t tpmccallum/http_server:latest .
 docker push tpmccallum/http_server:latest
 ```
 
-### Client
-
-
-```bash
-cd ~/wasmedge_wasi_socket/examples/http_client/target/wasm32-wasi/release
-```
-
-Create a new file called `Dockerfile` and paste the following code snipped into it
+## Install crunw
 
 ```bash
-# syntax=docker/dockerfile:1
-FROM scratch
-ADD http_client.wasm .
-CMD ["http_client.wasm"]
-
+cd ~
+wget https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh
+sudo chmod a+x crunw_install.sh
+./crunw_install.sh
 ```
 
-Once the `Dockerfile` is saved and closed, then run the following commands
-
-```bash
-docker build -f Dockerfile -t tpmccallum/http_client:latest .
-docker push tpmccallum/http_client:latest
-```
 
