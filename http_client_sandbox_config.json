@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "podsandbox12",
+    "name": "c_podsandbox12",
     "uid": "redhat-test-crio",
     "namespace": "redhat.test.crio",
     "attempt": 1
