@@ -36,6 +36,9 @@ cargo build --target wasm32-wasi --release
 
 ```
 
+---
+
+
 ## (OPTIONAL) Build and publish a Docker Hub image for the two wasm examples
 
 Please note, you can just skip this section and use our Docker images that we created for this example (no need to build and hold your own docker hub images, unless you want to). For example, perhaps you have custom rust/wasm code that you want to run.
@@ -92,6 +95,9 @@ docker build -f Dockerfile -t tpmccallum/http_server:latest .
 docker push tpmccallum/http_server:latest
 ```
 
+---
+
+
 ## Install crunw
 
 ```bash
@@ -100,5 +106,54 @@ wget https://raw.githubusercontent.com/second-state/crunw/main/crunw_install.sh
 sudo chmod a+x crunw_install.sh
 ./crunw_install.sh
 ```
+
+## Pull and run containers
+
+If you skipped the optional section above and just want to use our docker hub containers, please run the following code snippet.
+
+Alternatively, if you built and pushed your own unique custom containers above, in the **(OPTIONAL) Build and publish a Docker Hub image for the two wasm examples section** then you will need to update the following code snippet so that it fetches your unique containers from your own docker hub account.
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/http_socket_application.sh
+sudo chmod a+x http_socket_application.sh
+./http_socket_application.sh
+```
+
+## Manage WebAssembly programs and Docker containers side by side in Kubernetes
+
+The running_wasm_in_kubernetes.sh installs and starts the Kubernetes cluster.
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh
+sudo chmod a+x running_wasm_in_kubernetes.sh
+./running_wasm_in_kubernetes.sh
+```
+
+Once this runs, please **DO NOT close the terminal**. You will need to open a new terminal to perform the rest of this demonstration.
+
+## Open a new terminal
+
+Please go ahead and run the following in a new terminal
+
+```bash
+wget https://raw.githubusercontent.com/second-state/crunw/main/running_http_socket_in_kubernetes.sh
+sudo chmod a+x running_http_socket_in_kubernetes.sh
+./running_http_socket_in_kubernetes.sh
+```
+## Run the http_server
+
+```bash
+sudo ./kubernetes/cluster/kubectl.sh run -it --rm --restart=Never server-demo --image=tpmccallum/http_server:latest /http_server.wasm
+```
+
+## Run the http_client
+
+```bash
+sudo ./kubernetes/cluster/kubectl.sh run -it --rm --restart=Never client-demo --image=tpmccallum/http_client:latest /http_client.wasm
+```
+
+
+
+
 
 
