@@ -31,7 +31,7 @@ jobs:
         
     - name: Start k8s
       run: |
-        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh | bash
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh | bash > k8s.log 2>&1
   
     - name: Sleep for 1200s
       run: sleep 1200s
