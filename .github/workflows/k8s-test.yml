@@ -1,4 +1,4 @@
-name: k8s test
+name: k8s crunw test
 
 on:
   workflow_dispatch:
