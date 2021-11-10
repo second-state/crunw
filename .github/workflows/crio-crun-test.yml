@@ -31,5 +31,5 @@ jobs:
         
     - name: Run demo in CRI-O
       run: |
-        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/simple_wasi_application.sh | bash
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/simple_annotated_wasi_application.sh | bash
         
