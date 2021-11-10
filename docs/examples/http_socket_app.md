@@ -165,6 +165,8 @@ We now want to expose the http_server so that the client can interact with it. N
 sudo ./kubernetes/cluster/kubectl.sh run --expose --port=1234 -it --rm --restart=Never server-demo --image=tpmccallum/http_server:latest /http_server.wasm
 ```
 
+## Check what services are running - after expose flag
+
 If we run the above `sudo ./kubernetes/cluster/kubectl.sh get svc` code again, we will see this new service running on port `1234`
 
 ```bash
