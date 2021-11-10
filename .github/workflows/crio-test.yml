@@ -1,4 +1,4 @@
-name: CRI-O test
+name: CRI-O crunw test
 
 on:
   workflow_dispatch:
