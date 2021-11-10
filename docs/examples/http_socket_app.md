@@ -143,20 +143,87 @@ wget https://raw.githubusercontent.com/second-state/crunw/main/running_http_sock
 sudo chmod a+x running_http_socket_in_kubernetes.sh
 ./running_http_socket_in_kubernetes.sh
 ```
-## Run the http_server
+
+## Check what services are running
 
 ```bash
-sudo ./kubernetes/cluster/kubectl.sh run -it --rm --restart=Never server-demo --image=tpmccallum/http_server:latest /http_server.wasm
+sudo ./kubernetes/cluster/kubectl.sh get svc
+```
+
+The output will be similar to the following
+
+```bash
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP   15m
+```
+
+## Run the http_server
+
+We now want to expose the http_server so that the client can interact with it. Note the `--expose --port=1234` below.
+
+```bash
+sudo ./kubernetes/cluster/kubectl.sh run --expose --port=1234 -it --rm --restart=Never server-demo --image=tpmccallum/http_server:latest /http_server.wasm
+```
+
+If we run the above `sudo ./kubernetes/cluster/kubectl.sh get svc` code again, we will see this new service running on port `1234`
+
+```bash
+NAME          TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+kubernetes    ClusterIP   10.0.0.1     <none>        443/TCP    20m
+server-demo   ClusterIP   10.0.0.129   <none>        1234/TCP   2m10s
+```
+
+**Once a service is exposed, it can be addressed by its namespace**
+
+Let's go a little deeper anyway and describe the server-demo name which has been exposed in the default namespace
+
+```bash
+sudo ./kubernetes/cluster/kubectl.sh describe service/server-demo
+Name:              server-demo
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          run=server-demo
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.0.0.129
+IPs:               10.0.0.129
+Port:              <unset>  1234/TCP
+TargetPort:        1234/TCP
+Endpoints:         10.85.0.5:1234
+Session Affinity:  None
+Events:            <none>
+```
+
+We can see that the endpoint is `10.85.0.5:1234`
+
+We can also confirm with the following command that the server-demo is in the default namespace.
+
+```bash
+sudo ./kubernetes/cluster/kubectl.sh get all --namespace=default
+```
+
+```bash
+NAME              READY   STATUS    RESTARTS   AGE
+pod/server-demo   1/1     Running   0          39m
+
+NAME                  TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+service/kubernetes    ClusterIP   10.0.0.1     <none>        443/TCP    57m
+service/server-demo   ClusterIP   10.0.0.129   <none>        1234/TCP   39m
 ```
 
 ## Run the http_client
 
+We must specifying the namespace via the `--namespace` flag when executing the http_client function
+
 ```bash
-sudo ./kubernetes/cluster/kubectl.sh run -it --rm --restart=Never client-demo --image=tpmccallum/http_client:latest /http_client.wasm
+sudo ./kubernetes/cluster/kubectl.sh run -it --namespace=default --rm --restart=Never client-demo --image=tpmccallum/http_client:latest /http_client.wasm hello
 ```
 
 
-
+## TODO
+We must adjust the Rust Wasm to use the name of the service as apposed to 127.0.0.1
 
 
 
