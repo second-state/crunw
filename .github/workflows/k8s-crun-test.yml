@@ -1,0 +1,43 @@
+name: k8s crun test
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'info'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      
+    - name: Install apt-get packages
+      run: |
+        sudo ACCEPT_EULA=Y apt-get update
+        sudo ACCEPT_EULA=Y apt-get upgrade
+        sudo ACCEPT_EULA=Y apt-get install git wget
+        
+    - name: Install CRI-O and crunw
+      run: |
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/crun_install.sh | bash
+        
+    - name: Start k8s
+      run: |
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_wasm_in_kubernetes.sh | bash
+  
+    - name: Sleep for 1200s
+      run: sleep 1200s
+      shell: bash
+ 
+    - name: Run WasmEdge in k8s
+      run: |
+        cat k8s.log
+        wget -qO- https://raw.githubusercontent.com/second-state/crunw/main/running_annotated_wasm_in_kubernetes_2.sh | bash
