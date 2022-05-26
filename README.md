@@ -1,3 +1,7 @@
+## The crunw project is deprecated. The crun project has offcially supported WasmEdge. So this repo is only for archival purposes. Check out [the tutorial here](https://wasmedge.org/book/en/kubernetes/container/crun.html). If you have any question, please raise an issue on [WasmEdge/WasmEdge](https://github.com/WasmEdge/WasmEdge).
+
+---
+
 **CRUNW** is a OCI compatible runtime for running WASI enabled WebAssembly files inside a container envrionment. It is based on the [crun](https://github.com/containers/crun) runtime, and is extended to support the [WasmEdge](https://github.com/WasmEdge/WasmEdge) WebAssembly runtime.
 
 [**Watch a video demo**](https://youtu.be/1gZoQwx8G2c)
